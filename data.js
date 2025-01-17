@@ -105,7 +105,7 @@ export const cases = [
     caseNumber: '25-00003-FC',
     title: 'Pens v. Doomslayer',
     filingDate: '2025-01-08',
-    type: 'AC',
+    type: 'FC',
     status: 'Active',
     circuit: 'first',
     docketEntries: [
