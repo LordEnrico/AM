@@ -90,10 +90,36 @@ main {
 /* Forms */
 .login-form {
   background: #ECE9D8;
+  padding: 20px;
   border: 2px inset #fff;
-  padding: 15px;
-  width: 300px;
-  margin: 20px auto;
+  margin-top: 20px;
+}
+
+.login-form h3 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  border: 2px inset #fff;
+  background: #fff;
+  padding: 3px;
+  width: 100%;
+  margin: 5px 0 15px;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 5px;
+  background: linear-gradient(to bottom, #ECE9D8 0%, #C1C1C1 100%);
+  border: 2px outset #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-form button:active {
+  border: 2px inset #fff;
 }
 
 select, input, button {
@@ -139,11 +165,13 @@ td {
 
 /* Auth message */
 .auth-message {
-  background: #FFFFE1;
-  border: 1px solid #848484;
-  padding: 10px;
-  margin: 10px 0;
+  background: #FFF3CD;
+  border: 1px solid #FFEEBA;
+  color: #856404;
+  padding: 15px;
+  margin-bottom: 20px;
   font-weight: bold;
+  text-align: center;
 }
 
 /* Error message */
@@ -336,4 +364,148 @@ footer {
 
 .detail-table td {
   background: #fff;
+}
+
+/* Login page specific styles */
+.login-box {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border: 2px outset #ECE9D8;
+}
+
+.login-logo {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.fine-print {
+  margin-top: 20px;
+  font-size: 11px;
+  color: #333;
+  padding: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.fine-print ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.fine-print li {
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+.system-notice {
+  color: #cc0000;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px 0;
+  padding: 10px;
+  background: #fff4f4;
+  border: 1px solid #ffcaca;
+}
+
+.login-help {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f0f7ff;
+  border: 1px solid #cce0ff;
+}
+
+.browser-requirements {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+}
+
+/* New Styles */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.stat-box {
+  background: #fff;
+  border: 1px solid #848484;
+  padding: 15px;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1B57AA;
+}
+
+.stat-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.calendar-container {
+  margin: 20px 0;
+}
+
+.utilities-menu,
+.reports-menu {
+  margin-bottom: 20px;
+}
+
+.utilities-menu button,
+.reports-menu button {
+  margin: 0 10px 10px 0;
+  width: auto;
+}
+
+.batch-update-form {
+  background: #ECE9D8;
+  border: 2px inset #fff;
+  padding: 15px;
+}
+
+.report-output {
+  background: #fff;
+  border: 1px solid #848484;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+#utilityOutput,
+#reportOutput {
+  margin-top: 20px;
+}
+
+.header-links {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.header-links a {
+  color: #fff;
+  text-decoration: none;
+  padding: 3px 8px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+}
+
+.header-links a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.separator {
+  color: #fff;
+  margin: 0 10px;
 }

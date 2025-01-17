@@ -211,29 +211,29 @@ export function addFee(caseNumber) {
 
 export function editDefendantInfo(caseNumber) {
   const caseData = getCase(caseNumber);
-  const defendant = caseData.defendant || {};
+  if (!caseData) return;
   
   const modal = showEditModal('Edit Defendant Information', `
     <form id="defendantForm" class="edit-form">
       <div class="form-group">
         <label>Name:</label>
-        <input type="text" name="name" value="${defendant.name || ''}" required>
+        <input type="text" name="name" value="${caseData.defendant?.name || ''}" required>
       </div>
       <div class="form-group">
         <label>Address:</label>
-        <textarea name="address" rows="2" required>${defendant.address || ''}</textarea>
+        <textarea name="address" rows="2" required>${caseData.defendant?.address || ''}</textarea>
       </div>
       <div class="form-group">
         <label>Phone:</label>
-        <input type="tel" name="phone" value="${defendant.phone || ''}" pattern="[0-9-()+ ]*">
+        <input type="tel" name="phone" value="${caseData.defendant?.phone || ''}" pattern="[0-9-()+ ]*">
       </div>
       <div class="form-group">
         <label>Attorney:</label>
-        <input type="text" name="attorney" value="${defendant.attorney || ''}">
+        <input type="text" name="attorney" value="${caseData.defendant?.attorney || ''}">
       </div>
       <div class="form-group">
         <label>DOB:</label>
-        <input type="date" name="dob" value="${defendant.dob || ''}">
+        <input type="date" name="dob" value="${caseData.defendant?.dob || ''}">
       </div>
       <button type="submit">Update Defendant Information</button>
     </form>
@@ -259,34 +259,34 @@ export function editDefendantInfo(caseNumber) {
 
 export function editBondInfo(caseNumber) {
   const caseData = getCase(caseNumber);
-  const bond = caseData.bond || {};
+  if (!caseData) return;
   
   const modal = showEditModal('Edit Bond Information', `
     <form id="bondForm" class="edit-form">
       <div class="form-group">
         <label>Bond Type:</label>
         <select name="type" required>
-          <option value="Cash" ${bond.type === 'Cash' ? 'selected' : ''}>Cash Bond</option>
-          <option value="Surety" ${bond.type === 'Surety' ? 'selected' : ''}>Surety Bond</option>
-          <option value="Property" ${bond.type === 'Property' ? 'selected' : ''}>Property Bond</option>
-          <option value="Personal" ${bond.type === 'Personal' ? 'selected' : ''}>Personal Recognizance</option>
+          <option value="Cash" ${caseData.bond?.type === 'Cash' ? 'selected' : ''}>Cash Bond</option>
+          <option value="Surety" ${caseData.bond?.type === 'Surety' ? 'selected' : ''}>Surety Bond</option>
+          <option value="Property" ${caseData.bond?.type === 'Property' ? 'selected' : ''}>Property Bond</option>
+          <option value="Personal" ${caseData.bond?.type === 'Personal' ? 'selected' : ''}>Personal Recognizance</option>
         </select>
       </div>
       <div class="form-group">
         <label>Amount:</label>
-        <input type="number" name="amount" value="${bond.amount || ''}" min="0" step="0.01" required>
+        <input type="number" name="amount" value="${caseData.bond?.amount || ''}" min="0" step="0.01" required>
       </div>
       <div class="form-group">
         <label>Conditions:</label>
-        <textarea name="conditions" rows="4">${bond.conditions?.join('\n') || ''}</textarea>
+        <textarea name="conditions" rows="4">${caseData.bond?.conditions?.join('\n') || ''}</textarea>
       </div>
       <div class="form-group">
         <label>Status:</label>
         <select name="status" required>
-          <option value="Posted" ${bond.status === 'Posted' ? 'selected' : ''}>Posted</option>
-          <option value="Pending" ${bond.status === 'Pending' ? 'selected' : ''}>Pending</option>
-          <option value="Released" ${bond.status === 'Released' ? 'selected' : ''}>Released</option>
-          <option value="Forfeited" ${bond.status === 'Forfeited' ? 'selected' : ''}>Forfeited</option>
+          <option value="Posted" ${caseData.bond?.status === 'Posted' ? 'selected' : ''}>Posted</option>
+          <option value="Pending" ${caseData.bond?.status === 'Pending' ? 'selected' : ''}>Pending</option>
+          <option value="Released" ${caseData.bond?.status === 'Released' ? 'selected' : ''}>Released</option>
+          <option value="Forfeited" ${caseData.bond?.status === 'Forfeited' ? 'selected' : ''}>Forfeited</option>
         </select>
       </div>
       <button type="submit">Update Bond Information</button>
@@ -312,37 +312,37 @@ export function editBondInfo(caseNumber) {
 
 export function editJuryInfo(caseNumber) {
   const caseData = getCase(caseNumber);
-  const jury = caseData.jury || {};
+  if (!caseData) return;
   
   const modal = showEditModal('Edit Jury Information', `
     <form id="juryForm" class="edit-form">
       <div class="form-group">
         <label>Jury Type:</label>
         <select name="type" required>
-          <option value="Petit" ${jury.type === 'Petit' ? 'selected' : ''}>Petit Jury</option>
-          <option value="Grand" ${jury.type === 'Grand' ? 'selected' : ''}>Grand Jury</option>
+          <option value="Petit" ${caseData.jury?.type === 'Petit' ? 'selected' : ''}>Petit Jury</option>
+          <option value="Grand" ${caseData.jury?.type === 'Grand' ? 'selected' : ''}>Grand Jury</option>
         </select>
       </div>
       <div class="form-group">
         <label>Size:</label>
-        <input type="number" name="size" value="${jury.size || '12'}" min="6" max="23" required>
+        <input type="number" name="size" value="${caseData.jury?.size || '12'}" min="6" max="23" required>
       </div>
       <div class="form-group">
         <label>Selection Date:</label>
-        <input type="date" name="selectionDate" value="${jury.selectionDate || ''}" required>
+        <input type="date" name="selectionDate" value="${caseData.jury?.selectionDate || ''}" required>
       </div>
       <div class="form-group">
         <label>Status:</label>
         <select name="status" required>
-          <option value="Pending" ${jury.status === 'Pending' ? 'selected' : ''}>Pending Selection</option>
-          <option value="Selected" ${jury.status === 'Selected' ? 'selected' : ''}>Selected</option>
-          <option value="Sworn" ${jury.status === 'Sworn' ? 'selected' : ''}>Sworn</option>
-          <option value="Dismissed" ${jury.status === 'Dismissed' ? 'selected' : ''}>Dismissed</option>
+          <option value="Pending" ${caseData.jury?.status === 'Pending' ? 'selected' : ''}>Pending Selection</option>
+          <option value="Selected" ${caseData.jury?.status === 'Selected' ? 'selected' : ''}>Selected</option>
+          <option value="Sworn" ${caseData.jury?.status === 'Sworn' ? 'selected' : ''}>Sworn</option>
+          <option value="Dismissed" ${caseData.jury?.status === 'Dismissed' ? 'selected' : ''}>Dismissed</option>
         </select>
       </div>
       <div class="form-group">
         <label>Notes:</label>
-        <textarea name="notes" rows="4">${jury.notes || ''}</textarea>
+        <textarea name="notes" rows="4">${caseData.jury?.notes || ''}</textarea>
       </div>
       <button type="submit">Update Jury Information</button>
     </form>
@@ -423,9 +423,6 @@ export function enterJudgment(caseNumber) {
 }
 
 export function initiateAppeal(caseNumber) {
-  const caseData = getCase(caseNumber);
-  if (!caseData) return false;
-
   const modal = showEditModal('Initiate Appeal', `
     <form id="appealForm" class="edit-form">
       <div class="form-group">
@@ -574,4 +571,168 @@ function generateJuryInfo(jury) {
       ${jury.notes ? `<tr><td>Notes:</td><td>${jury.notes}</td></tr>` : ''}
     </table>
   `;
+}
+
+export function printCase(caseNumber) {
+  const caseData = getCase(caseNumber);
+  if (!caseData) return;
+
+  // Create print-friendly version
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Case ${caseNumber} - Print View</title>
+      <style>
+        @media screen, print {
+          body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; margin: 2cm; }
+          .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 20px; }
+          .section { margin: 20px 0; page-break-inside: avoid; }
+          .section h3 { border-bottom: 1px solid #000; padding-bottom: 5px; }
+          table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+          th, td { border: 1px solid #000; padding: 5px; text-align: left; }
+          th { background-color: #f0f0f0; }
+          .footer { text-align: center; margin-top: 20px; font-size: 10pt; }
+          .no-print { display: none; }
+          @media print {
+            button { display: none; }
+            a { text-decoration: none; color: black; }
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1>JUDICIARY OF PENGINEERING</h1>
+        <h2>Official Case Record</h2>
+        <h3>Case Number: ${caseNumber}</h3>
+        <p>Print Date: ${new Date().toLocaleString()}</p>
+      </div>
+
+      <div class="section">
+        <h3>Case Information</h3>
+        <table>
+          <tr><td><strong>Title:</strong></td><td>${caseData.title}</td></tr>
+          <tr><td><strong>Filing Date:</strong></td><td>${caseData.filingDate}</td></tr>
+          <tr><td><strong>Type:</strong></td><td>${caseData.type}</td></tr>
+          <tr><td><strong>Status:</strong></td><td>${caseData.status}</td></tr>
+          <tr><td><strong>Circuit:</strong></td><td>${caseData.circuit}</td></tr>
+        </table>
+      </div>
+
+      ${caseData.defendant?.name ? `
+      <div class="section">
+        <h3>Defendant Information</h3>
+        <table>
+          <tr><td><strong>Name:</strong></td><td>${caseData.defendant.name}</td></tr>
+          ${caseData.defendant.address ? `<tr><td><strong>Address:</strong></td><td>${caseData.defendant.address}</td></tr>` : ''}
+          ${caseData.defendant.phone ? `<tr><td><strong>Phone:</strong></td><td>${caseData.defendant.phone}</td></tr>` : ''}
+          ${caseData.defendant.attorney ? `<tr><td><strong>Attorney:</strong></td><td>${caseData.defendant.attorney}</td></tr>` : ''}
+        </table>
+      </div>
+      ` : ''}
+
+      <div class="section">
+        <h3>Docket Entries</h3>
+        ${caseData.docketEntries?.length ? `
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Judge</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${caseData.docketEntries.map(entry => `
+              <tr>
+                <td>${entry.date}</td>
+                <td>${entry.description}</td>
+                <td>${entry.judge}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        ` : '<p>No docket entries found.</p>'}
+      </div>
+
+      ${caseData.hearings?.length ? `
+      <div class="section">
+        <h3>Hearings</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${caseData.hearings.map(h => `
+              <tr>
+                <td>${h.date}</td>
+                <td>${h.time}</td>
+                <td>${h.type}</td>
+                <td>${h.description}</td>
+                <td>${h.status}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      ` : ''}
+
+      ${caseData.fees?.length ? `
+      <div class="section">
+        <h3>Fees and Assessments</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Due Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${caseData.fees.map(f => `
+              <tr>
+                <td>${f.type}</td>
+                <td>$${f.amount}</td>
+                <td>${f.status}</td>
+                <td>${f.dueDate}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      ` : ''}
+
+      ${caseData.judgment ? `
+      <div class="section">
+        <h3>Judgment Information</h3>
+        <table>
+          <tr><td><strong>Type:</strong></td><td>${caseData.judgment.type}</td></tr>
+          <tr><td><strong>Date:</strong></td><td>${caseData.judgment.date}</td></tr>
+          <tr><td><strong>Judge:</strong></td><td>${caseData.judgment.judge}</td></tr>
+          <tr><td><strong>Text:</strong></td><td>${caseData.judgment.text}</td></tr>
+        </table>
+      </div>
+      ` : ''}
+
+      <div class="footer">
+        <p>Official Court Record - Judiciary of Pengineering</p>
+        <p>Generated from CM/ECF on ${new Date().toLocaleString()}</p>
+      </div>
+
+      <div class="no-print">
+        <button onclick="window.print()">Print Case Record</button>
+      </div>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
 }

@@ -12,7 +12,13 @@
       <div>
         <h1>JUDICIARY OF PENGINEERING</h1>
         <h2>Case Management/Electronic Case Files</h2>
-        <a href="pacer.html" class="pacer-link">Public Access (PACER)</a>
+        <div class="header-links">
+          <a href="pacer.html" class="pacer-link">Public Access (PACER)</a>
+          <span class="separator">|</span>
+          <a href="judges.html">Meet the Judges</a>
+          <span class="separator">|</span>
+          <a href="sentencing.html" class="sentencing-link">Sentencing Guidelines Calculator</a>
+        </div>
       </div>
     </div>
   </header>
@@ -23,18 +29,56 @@
       Unauthorized access or use of this system is strictly prohibited and may result in criminal prosecution.
     </div>
     
-    <div class="login-form">
-      <h3>Judicial Login</h3>
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" required>
+    <div class="login-box">
+      <img src="/JISPEN (3).png" alt="JISPEN Logo" class="login-logo">
+      
+      <div class="login-form">
+        <h3>Judicial Login - CM/ECF System</h3>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" required>
+        </div>
+        <div id="loginError" class="error-message" style="display: none;"></div>
+        <button onclick="authenticate()">Login to CM/ECF</button>
+        
+        <div class="fine-print">
+          <p>By accessing this system, you agree to the following:</p>
+          <ul>
+            <li>This is a United States Judiciary of Pengineering computer system, which includes: (1) this computer, (2) this computer network, (3) all computers connected to this network, and (4) all devices and storage media attached to this network or to a computer on this network.</li>
+            <li>This system is provided for official Judiciary use only.</li>
+            <li>The Judiciary routinely monitors communications occurring on this system.</li>
+            <li>Any information stored on this system may be accessed by authorized Judiciary personnel.</li>
+            <li>Unauthorized use of this system is strictly prohibited and may be subject to criminal prosecution.</li>
+            <li>Evidence of unauthorized use collected during monitoring may be used for administrative, criminal, or other adverse action.</li>
+            <li>Use of this system constitutes consent to monitoring for these purposes.</li>
+          </ul>
+          
+          <p class="system-notice">NOTICE: This system is protected by multiple layers of security and is monitored for security purposes.</p>
+          
+          <div class="login-help">
+            <p>For technical assistance:</p>
+            <ul>
+              <li>Call the JISPEN Service Desk at (800) PEN-CTRL</li>
+              <li>Email: help@jispen.uscourts.gov</li>
+              <li>Hours of Operation: 8:00 AM to 6:00 PM (PIST - Pengineering Island Standard Time)</li>
+            </ul>
+          </div>
+          
+          <div class="browser-requirements">
+            <p>System Requirements:</p>
+            <ul>
+              <li>Supported Browsers: Firefox (Latest), Chrome (Latest), Safari (Latest), Edge (Latest)</li>
+              <li>JavaScript must be enabled</li>
+              <li>Cookies must be enabled</li>
+              <li>Pop-up blockers should be disabled for this site</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" required>
-      </div>
-      <div id="loginError" class="error-message" style="display: none;"></div>
-      <button onclick="authenticate()">Login to CM/ECF</button>
     </div>
   </div>
 
@@ -49,6 +93,8 @@
         <ul>
           <li><a href="javascript:showDocket()">Query/Reports</a></li>
           <li><a href="javascript:showFilingForm()">File a New Case</a></li>
+          <li><a href="javascript:showUtilities()">Utilities</a></li>
+          <li><a href="javascript:showReports()">Reports</a></li>
         </ul>
       </nav>
     </div>
@@ -82,7 +128,7 @@
       </div>
 
       <div id="caseDetailView" class="section" style="display:none">
-        <button onclick="showDocket()" class="back-button">← Back to Docket</button>
+        <button onclick="showDocket()" class="back-button">Back to Docket</button>
         <h3>Case Details: <span id="detailCaseNumber"></span></h3>
         
         <div class="tab-container">
@@ -107,6 +153,7 @@
           </select>
           <button onclick="window.updateCaseStatus(document.getElementById('detailCaseNumber').textContent, document.getElementById('caseStatusSelect').value)">Update Status</button>
           <button onclick="window.enterJudgment(document.getElementById('detailCaseNumber').textContent)">Enter Judgment</button>
+          <button onclick="window.printCase(document.getElementById('detailCaseNumber').textContent)">Print Case</button>
         </div>
 
         <div id="docketInfo" class="tab-content active">
@@ -192,6 +239,18 @@
           <button type="submit">Submit Filing</button>
         </form>
       </div>
+
+      <div id="utilityView" class="section" style="display:none">
+        <h3>Utilities</h3>
+        <div id="utilityContent">
+          <button onclick="window.showSentencingCalc()">Sentencing Calculator</button>
+        </div>
+      </div>
+
+      <div id="reportsView" class="section" style="display:none">
+        <h3>Reports</h3>
+        <div id="reportsContent"></div>
+      </div>
     </main>
   </div>
 
@@ -212,17 +271,14 @@
 
   <script>
     function switchTab(tabId) {
-      // Hide all tab content
       document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
       });
       
-      // Remove active class from all tab buttons
       document.querySelectorAll('.tab-button').forEach(button => {
         button.classList.remove('active');
       });
       
-      // Show selected tab and activate its button
       document.getElementById(tabId).classList.add('active');
       document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active');
     }
