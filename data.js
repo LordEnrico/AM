@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 let currentId = 2; // Track last used case ID for new cases
 
 // Mock database tables
@@ -116,7 +119,7 @@ export function addCase(caseData) {
     jury: {}
   };
   cases.push(newCase);
-  saveCasesToLocalStorage();
+  saveCasesToFile();
   return newCase;
 }
 
@@ -124,7 +127,7 @@ export function updateCase(caseNumber, updates) {
   const index = cases.findIndex(c => c.caseNumber === caseNumber);
   if (index !== -1) {
     cases[index] = { ...cases[index], ...updates };
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return cases[index];
   }
   return null;
@@ -139,7 +142,7 @@ export function createDocketEntry(caseNumber, entry) {
   if (caseData) {
     if (!caseData.docketEntries) caseData.docketEntries = [];
     caseData.docketEntries.push(entry);
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -150,7 +153,7 @@ export function addHearing(caseNumber, hearing) {
   if (caseData) {
     if (!caseData.hearings) caseData.hearings = [];
     caseData.hearings.push(hearing);
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -161,7 +164,7 @@ export function addFeeRecord(caseNumber, fee) {
   if (caseData) {
     if (!caseData.fees) caseData.fees = [];
     caseData.fees.push(fee);
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -171,7 +174,7 @@ export function updateDefendant(caseNumber, defendantInfo) {
   const caseData = getCase(caseNumber);
   if (caseData) {
     caseData.defendant = { ...caseData.defendant, ...defendantInfo };
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -181,7 +184,7 @@ export function updateBond(caseNumber, bondInfo) {
   const caseData = getCase(caseNumber);
   if (caseData) {
     caseData.bond = { ...caseData.bond, ...bondInfo };
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -191,7 +194,7 @@ export function updateJury(caseNumber, juryInfo) {
   const caseData = getCase(caseNumber);
   if (caseData) {
     caseData.jury = { ...caseData.jury, ...juryInfo };
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -206,7 +209,7 @@ export function updateCaseStatus(caseNumber, status, judge) {
       description: `Case status updated to: ${status}`,
       judge
     });
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
@@ -222,45 +225,49 @@ export function enterJudgmentRecord(caseNumber, judgmentInfo) {
       description: `Judgment Entered: ${judgmentInfo.type}\n${judgmentInfo.text}`,
       judge: judgmentInfo.judge
     });
-    saveCasesToLocalStorage();
+    saveCasesToFile();
     return true;
   }
   return false;
 }
 
-// Local storage functions
-function saveCasesToLocalStorage() {
-  localStorage.setItem('cases', JSON.stringify(cases));
+// Server-side storage functions
+function saveCasesToFile() {
+  const filePath = path.join(__dirname, 'cases.json');
+  fs.writeFileSync(filePath, JSON.stringify(cases, null, 2));
 }
 
-function loadCasesFromLocalStorage() {
-  const storedCases = localStorage.getItem('cases');
-  if (storedCases) {
-    return JSON.parse(storedCases);
+function loadCasesFromFile() {
+  const filePath = path.join(__dirname, 'cases.json');
+  if (fs.existsSync(filePath)) {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(data);
   }
   return [];
 }
 
-function saveUserCredentialsToLocalStorage() {
-  localStorage.setItem('userCredentials', JSON.stringify(userCredentials));
+function saveUserCredentialsToFile() {
+  const filePath = path.join(__dirname, 'userCredentials.json');
+  fs.writeFileSync(filePath, JSON.stringify(userCredentials, null, 2));
 }
 
-function loadUserCredentialsFromLocalStorage() {
-  const storedCredentials = localStorage.getItem('userCredentials');
-  if (storedCredentials) {
-    return JSON.parse(storedCredentials);
+function loadUserCredentialsFromFile() {
+  const filePath = path.join(__dirname, 'userCredentials.json');
+  if (fs.existsSync(filePath)) {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(data);
   }
   return {};
 }
 
-// Initialize data from local storage
-const storedCases = loadCasesFromLocalStorage();
+// Initialize data from file storage
+const storedCases = loadCasesFromFile();
 if (storedCases.length > 0) {
   cases.length = 0;
   cases.push(...storedCases);
 }
 
-const storedUserCredentials = loadUserCredentialsFromLocalStorage();
+const storedUserCredentials = loadUserCredentialsFromFile();
 if (Object.keys(storedUserCredentials).length > 0) {
   Object.assign(userCredentials, storedUserCredentials);
 }

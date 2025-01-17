@@ -194,13 +194,22 @@ function handleNewCase(e) {
     circuit: document.getElementById('circuitSelect').value
   };
   
-  cases.push(newCase);
-  
-  // Store updated cases array in local storage
-  localStorage.setItem('cases', JSON.stringify(cases));
-  
-  alert(`Case filed successfully!\nCase Number: ${caseNumber}`);
-  showDocket();
+  fetch('/api/cases', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newCase)
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(`Case filed successfully!\nCase Number: ${caseNumber}`);
+    showDocket();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to file case. Please try again.');
+  });
 }
 
 // Initialize event listeners
