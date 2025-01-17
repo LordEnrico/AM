@@ -12,7 +12,7 @@ export const userCredentials = {
     password: 'firstcircuit456',
     name: 'Judge Edward Angers',
     circuits: ['first'],
-    types: ['CV', 'FC', 'LT', 'MC', 'CI']
+    types: ['CV', 'FC', 'LT', 'MC', 'CI','AC']
   },
   holden: {
     password: 'special789',
@@ -99,7 +99,62 @@ export const cases = [
     defendant: {},
     bond: {},
     jury: {}
-  }
+  },
+  {
+    id: 3,
+    caseNumber: '25-00003-FC',
+    title: 'Pens v. Doomslayer',
+    filingDate: '2025-01-08',
+    type: 'AC',
+    status: 'Active',
+    circuit: 'first',
+    docketEntries: [
+      {
+        date: '2025-01-08',
+        description: 'Case filed',
+        judge: 'Judge Edward Angers'
+      }
+    ],
+    hearings: [
+      {
+        date: '2025-01-015',
+        type: 'Initial',
+        time: '09:00',
+        description: 'Initial hearing',
+        judge: 'Judge Edward Angers',
+        status: 'Scheduled'
+      }
+    ],
+    fees: [
+      {
+        type: 'Filing',
+        amount: 350,
+        status: 'Paid',
+        judge: 'Judge Edward Angers',
+        dateAdded: '2023-12-01',
+        dueDate: '2023-12-15'
+      }
+    ],
+    defendant: {
+      name: 'Ukai Doomslayer',
+      address: '6999 Rolling Woods Rd, Troy, MI 48098',
+      phone: 'UNKOWN',
+      attorney: 'WAIVED'
+    },
+    bond: {
+      type: 'Personal Resent Bond',
+      amount: 99999999,
+      status: 'Posted',
+      conditions: ['Must maintain contact with the Penmarshal General.']
+    },
+    jury: {
+      type: 'Criminal Grand',
+      size: 20,
+      selected: false,
+      selectionDate: '2025-01-31',
+      notes: 'Jury selected from pool of certified experts'
+    }
+  },
 ];
 
 // Database operations
