@@ -16,9 +16,13 @@ import {
 } from './caseManagement.js';
 import { generateReport } from './reports.js';
 import { generateStatistics, generateHearingCalendar, batchUpdateCases, showSentencingCalculator } from './utilities.js';
+import { initializeMessaging, sendMessage, receiveMessages, displayMessages } from './messages.js';
 
 // Initialize authentication
 initializeAuth();
+
+// Initialize messaging system
+initializeMessaging();
 
 // Export functions for global access
 window.authenticate = authenticate;
@@ -38,6 +42,11 @@ window.initiateAppeal = initiateAppeal;
 window.updateCaseStatus = updateCaseStatus;
 window.enterJudgment = enterJudgment;
 window.printCase = printCase;
+
+// Messaging functions
+window.sendMessage = sendMessage;
+window.receiveMessages = receiveMessages;
+window.displayMessages = displayMessages;
 
 // Reports functions
 window.generateDocketReport = function() {
