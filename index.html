@@ -132,7 +132,8 @@
         <h3>Case Details: <span id="detailCaseNumber"></span></h3>
         
         <div class="tab-container">
-          <button class="tab-button active" onclick="switchTab('docketInfo')">Docket Information</button>
+          <button class="tab-button active" onclick="switchTab('summary')">Summary</button>
+          <button class="tab-button" onclick="switchTab('docketInfo')">Docket Information</button>
           <button class="tab-button" onclick="switchTab('hearings')">Hearings</button>
           <button class="tab-button" onclick="switchTab('fees')">Fees/Assessments</button>
           <button class="tab-button" onclick="switchTab('defendant')">Defendant Information</button>
@@ -160,7 +161,12 @@
           <button onclick="window.printCase(document.getElementById('detailCaseNumber').textContent)">Print Case</button>
         </div>
 
-        <div id="docketInfo" class="tab-content active">
+        <div id="summary" class="tab-content active">
+          <h4>Summary</h4>
+          <div id="caseSummary"></div>
+        </div>
+
+        <div id="docketInfo" class="tab-content">
           <h4>Docket Information</h4>
           <div id="docketEntries"></div>
           <button onclick="addDocketEntry()">Add Docket Entry</button>
