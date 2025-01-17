@@ -196,6 +196,9 @@ function handleNewCase(e) {
   
   cases.push(newCase);
   
+  // Store updated cases array in local storage
+  localStorage.setItem('cases', JSON.stringify(cases));
+  
   alert(`Case filed successfully!\nCase Number: ${caseNumber}`);
   showDocket();
 }

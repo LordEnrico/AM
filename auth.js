@@ -9,6 +9,16 @@ export function initializeAuth() {
   }
   document.addEventListener('mousemove', resetSessionTimeout);
   document.addEventListener('keypress', resetSessionTimeout);
+
+  // Read currentUser from local storage if available
+  const storedUser = localStorage.getItem('currentUser');
+  if (storedUser) {
+    currentUser = JSON.parse(storedUser);
+    document.getElementById('loginContainer').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('loggedInUser').style.display = 'block';
+  }
 }
 
 export function authenticate() {
@@ -68,6 +78,9 @@ export function authenticate() {
     document.getElementById('userName').textContent = currentUser.name;
     document.getElementById('loggedInUser').style.display = 'block';
     
+    // Store currentUser in local storage
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
     // Reset login attempts
     delete loginAttempts[username];
   } else {
@@ -94,4 +107,7 @@ export function logout() {
   document.getElementById('loginError').textContent = '';
   document.getElementById('docketView').style.display = 'none';
   document.getElementById('filingForm').style.display = 'none';
+  
+  // Remove currentUser from local storage
+  localStorage.removeItem('currentUser');
 }
