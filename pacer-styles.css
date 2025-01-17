@@ -1,0 +1,31 @@
+/* Inherit base styles from main application */
+@import 'styles.css';
+
+/* PACER-specific styles */
+.notice-box {
+  background: #FFFFE1;
+  border: 1px solid #848484;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.results-section {
+  margin-top: 20px;
+}
+
+#searchForm {
+  background: #ECE9D8;
+  border: 2px inset #fff;
+  padding: 10px;
+}
+
+.view-link {
+  color: #0000EE;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.view-link:hover {
+  color: #551A8B;
+}

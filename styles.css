@@ -1,0 +1,339 @@
+/* Reset */
+body {
+  font-family: "Verdana", "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #D4D0C8;
+  color: #000000;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Header styles */
+header {
+  background: linear-gradient(to bottom, #1B57AA 0%, #2A65B3 50%, #1B57AA 100%);
+  border-bottom: 2px solid #000;
+  padding: 10px;
+  color: white;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+h2 {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Navigation */
+.nav-container {
+  background: #ECE9D8;
+  border: 2px outset #fff;
+  margin: 5px;
+  padding: 5px;
+}
+
+nav {
+  border: 1px solid #848484;
+  background: #fff;
+  padding: 5px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline;
+  margin-right: 15px;
+}
+
+nav a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+nav a:visited {
+  color: #551A8B;
+}
+
+/* Main content */
+main {
+  margin: 10px;
+  background: #ECE9D8;
+  border: 2px outset #fff;
+  padding: 5px;
+}
+
+.section {
+  background: #fff;
+  border: 1px solid #848484;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Forms */
+.login-form {
+  background: #ECE9D8;
+  border: 2px inset #fff;
+  padding: 15px;
+  width: 300px;
+  margin: 20px auto;
+}
+
+select, input, button {
+  font-family: "Verdana", "Arial", sans-serif;
+  font-size: 12px;
+  border: 2px inset #fff;
+  background: #fff;
+  padding: 2px;
+  margin: 2px 0;
+  width: 100%;
+}
+
+button {
+  background: linear-gradient(to bottom, #ECE9D8 0%, #C1C1C1 100%);
+  border: 2px outset #fff;
+  padding: 3px;
+  cursor: pointer;
+}
+
+button:active {
+  border: 2px inset #fff;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #848484;
+}
+
+th {
+  background: linear-gradient(to bottom, #ECE9D8 0%, #C1C1C1 100%);
+  border: 1px solid #848484;
+  padding: 4px;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #848484;
+  padding: 4px;
+  background: #fff;
+}
+
+/* Auth message */
+.auth-message {
+  background: #FFFFE1;
+  border: 1px solid #848484;
+  padding: 10px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Error message */
+.error-message {
+  background: #FFE1E1;
+  border: 1px solid #FF0000;
+  color: #FF0000;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.logged-in-user {
+  background: #ECE9D8;
+  border: 2px inset #fff;
+  padding: 5px;
+  margin: 5px;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #D4D0C8;
+  border-top: 2px solid #848484;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Case Detail Styles */
+.tab-container {
+  border-bottom: 1px solid #848484;
+  margin-bottom: 10px;
+}
+
+.tab-button {
+  background: #ECE9D8;
+  border: 2px outset #fff;
+  padding: 5px 10px;
+  margin-right: 2px;
+  cursor: pointer;
+  width: auto;
+}
+
+.tab-button.active {
+  background: #fff;
+  border-bottom: none;
+  position: relative;
+  top: 1px;
+}
+
+.tab-content {
+  display: none;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #848484;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #D4D0C8;
+  border: 2px outset #fff;
+  padding: 20px;
+  min-width: 400px;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #848484;
+}
+
+.modal-buttons {
+  text-align: right;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #848484;
+}
+
+.modal-buttons button {
+  margin-left: 10px;
+  padding: 3px 10px;
+}
+
+.back-button {
+  margin-bottom: 10px;
+  width: auto;
+}
+
+/* Table cell actions */
+.action-cell {
+  white-space: nowrap;
+}
+
+.action-link {
+  color: #0000EE;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.action-link:hover {
+  color: #551A8B;
+}
+
+/* Modal and editing styles */
+.edit-form {
+  background: #ECE9D8;
+  border: 2px inset #fff;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.edit-form .form-group {
+  margin-bottom: 10px;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+.edit-form input,
+.edit-form select,
+.edit-form textarea {
+  width: 100%;
+  padding: 3px;
+  border: 2px inset #fff;
+  background: #fff;
+  font-family: "Verdana", "Arial", sans-serif;
+  font-size: 12px;
+}
+
+.edit-form textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.edit-form button {
+  background: linear-gradient(to bottom, #ECE9D8 0%, #C1C1C1 100%);
+  border: 2px outset #fff;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.edit-form button:active {
+  border: 2px inset #fff;
+}
+
+/* Detail view tables */
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.detail-table th,
+.detail-table td {
+  padding: 5px;
+  border: 1px solid #848484;
+  text-align: left;
+}
+
+.detail-table th {
+  background: linear-gradient(to bottom, #ECE9D8 0%, #C1C1C1 100%);
+  font-weight: bold;
+}
+
+.detail-table td {
+  background: #fff;
+}

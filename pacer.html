@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PACER - JUDICIARY OF PENGINEERING</title>
+  <link rel="stylesheet" href="pacer-styles.css">
+  <script type="module" src="pacer.js"></script>
+</head>
+<body>
+  <header>
+    <h1>PACER: PUBLIC ACCESS TO COURT ELECTRONIC RECORDS</h1>
+    <h2>JUDICIARY OF PENGINEERING</h2>
+  </header>
+
+  <main>
+    <div class="notice-box">
+      <p>PUBLIC ACCESS: Free and open search of court records for the Judiciary of Pengineering.</p>
+    </div>
+
+    <div id="searchSection" class="section">
+      <h3>Case Search</h3>
+      <form id="searchForm">
+        <div class="form-group">
+          <label>Circuit:</label>
+          <select id="circuitSelect">
+            <option value="all">All Circuits</option>
+            <option value="first">First Circuit</option>
+            <option value="second">Second Circuit</option>
+            <option value="third">Third Circuit</option>
+            <option value="special">Special Inquisitions</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Case Type:</label>
+          <select id="caseTypeSelect">
+            <option value="all">All Types</option>
+            <option value="CV">Civil Case</option>
+            <option value="GA">General Appeals</option>
+            <option value="GJ">Grand Judiciary Appeals</option>
+            <option value="FC">Felonious Criminal</option>
+            <option value="LT">Landlord Tenant</option>
+            <option value="AC">Capital Felon</option>
+            <option value="MC">Misdemeanor</option>
+            <option value="CI">Civil Infraction</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Case Number:</label>
+          <input type="text" id="caseNumber" placeholder="YY-NNNNN-XX">
+        </div>
+
+        <div class="form-group">
+          <label>Date Filed:</label>
+          <input type="date" id="dateFiled">
+        </div>
+
+        <div class="form-group">
+          <label>Party Name:</label>
+          <input type="text" id="partyName">
+        </div>
+
+        <button type="button" onclick="window.searchCases()">Search</button>
+      </form>
+
+      <div id="searchResults" class="results-section">
+        <table id="resultsTable" style="display: none;">
+          <thead>
+            <tr>
+              <th>Case Number</th>
+              <th>Title</th>
+              <th>Filing Date</th>
+              <th>Type</th>
+              <th>Circuit</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="caseView" class="section" style="display: none;">
+      <!-- Case view content will be dynamically inserted here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>PACER Service Center - Public Access: Free Case Search</p>
+  </footer>
+</body>
+</html>
