@@ -1,3 +1,5 @@
+// navigation.js
+import { cases } from './data.js';
 import { currentUser } from './auth.js';
 
 export function showDocket() {
@@ -7,56 +9,48 @@ export function showDocket() {
   document.getElementById('filingForm').style.display = 'none';
 
   const circuit = document.getElementById('circuitSelect').value;
+  
+  // Filter cases based on user permissions
+  const filteredCases = cases.filter(c => {
+    const circuitMatch = currentUser.circuits.includes('all') || currentUser.circuits.includes(c.circuit);
+    const typeMatch = currentUser.types.includes('all') || currentUser.types.includes(c.type);
+    return circuitMatch && typeMatch && (circuit === 'all' || c.circuit === circuit);
+  });
 
-  fetch('/api/cases')
-    .then(response => response.json())
-    .then(cases => {
-      // Filter cases based on user permissions
-      const filteredCases = cases.filter(c => {
-        const circuitMatch = currentUser.circuits.includes('all') || currentUser.circuits.includes(c.circuit);
-        const typeMatch = currentUser.types.includes('all') || currentUser.types.includes(c.type);
-        return circuitMatch && typeMatch && (circuit === 'all' || c.circuit === circuit);
-      });
+  const tbody = document.getElementById('docketBody');
+  tbody.innerHTML = '';
 
-      const tbody = document.getElementById('docketBody');
-      tbody.innerHTML = '';
-
-      filteredCases.forEach(c => {
-        const row = tbody.insertRow();
-        row.insertCell().textContent = c.caseNumber;
-        row.insertCell().textContent = c.title;
-        row.insertCell().textContent = c.filingDate;
-        row.insertCell().textContent = c.type;
-        row.insertCell().textContent = c.status;
-        const actionsCell = row.insertCell();
-        actionsCell.className = 'action-cell';
-        actionsCell.innerHTML = `
-          <span class="action-link" onclick="viewCase('${c.caseNumber}')">View</span>
-        `;
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching cases:', error);
-      alert('Failed to load cases. Please try again.');
-    });
+  filteredCases.forEach(c => {
+    const row = tbody.insertRow();
+    row.insertCell().textContent = c.caseNumber;
+    row.insertCell().textContent = c.title;
+    row.insertCell().textContent = c.filingDate;
+    row.insertCell().textContent = c.type;
+    row.insertCell().textContent = c.status;
+    const actionsCell = row.insertCell();
+    actionsCell.className = 'action-cell';
+    actionsCell.innerHTML = `
+      <span class="action-link" onclick="viewCase('${c.caseNumber}')">View</span>
+    `;
+  });
 }
 
 export function showFilingForm() {
   if (!currentUser) return;
-
+  
   document.getElementById('docketView').style.display = 'none';
   document.getElementById('filingForm').style.display = 'block';
 }
 
 export function showUtilities() {
   if (!currentUser) return;
-
+  
   document.getElementById('docketView').style.display = 'none';
   document.getElementById('filingForm').style.display = 'none';
   document.getElementById('caseDetailView').style.display = 'none';
   document.getElementById('utilityView').style.display = 'block';
   document.getElementById('reportsView').style.display = 'none';
-
+  
   const utilityContent = document.getElementById('utilityContent');
   utilityContent.innerHTML = `
     <div class="utilities-menu">
@@ -70,13 +64,13 @@ export function showUtilities() {
 
 export function showReports() {
   if (!currentUser) return;
-
+  
   document.getElementById('docketView').style.display = 'none';
   document.getElementById('filingForm').style.display = 'none';
   document.getElementById('caseDetailView').style.display = 'none';
   document.getElementById('utilityView').style.display = 'none';
   document.getElementById('reportsView').style.display = 'block';
-
+  
   const reportsContent = document.getElementById('reportsContent');
   reportsContent.innerHTML = `
     <div class="reports-menu">

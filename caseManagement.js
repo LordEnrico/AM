@@ -109,22 +109,10 @@ export function addDocketEntry(caseNumber) {
       judge: currentUser.name
     };
     
-    fetch(`/api/cases/${caseNumber}/docketEntries`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(entry)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (createDocketEntry(caseNumber, entry)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to add docket entry. Please try again.');
-    });
+    }
   };
 }
 
@@ -169,22 +157,10 @@ export function scheduleHearing(caseNumber) {
       status: 'Scheduled'
     };
     
-    fetch(`/api/cases/${caseNumber}/hearings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(hearing)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (addHearing(caseNumber, hearing)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to schedule hearing. Please try again.');
-    });
+    }
   };
 }
 
@@ -226,22 +202,10 @@ export function addFee(caseNumber) {
       dateAdded: new Date().toISOString().split('T')[0]
     };
     
-    fetch(`/api/cases/${caseNumber}/fees`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(fee)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (addFeeRecord(caseNumber, fee)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to add fee. Please try again.');
-    });
+    }
   };
 }
 
@@ -286,22 +250,10 @@ export function editDefendantInfo(caseNumber) {
       dob: form.querySelector('[name="dob"]').value
     };
     
-    fetch(`/api/cases/${caseNumber}/defendant`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(defendantInfo)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (updateDefendant(caseNumber, defendantInfo)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to update defendant information. Please try again.');
-    });
+    }
   };
 }
 
@@ -351,22 +303,10 @@ export function editBondInfo(caseNumber) {
       status: form.querySelector('[name="status"]').value
     };
     
-    fetch(`/api/cases/${caseNumber}/bond`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(bondInfo)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (updateBond(caseNumber, bondInfo)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to update bond information. Please try again.');
-    });
+    }
   };
 }
 
@@ -419,60 +359,29 @@ export function editJuryInfo(caseNumber) {
       notes: form.querySelector('[name="notes"]').value
     };
     
-    fetch(`/api/cases/${caseNumber}/jury`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(juryInfo)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (updateJury(caseNumber, juryInfo)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to update jury information. Please try again.');
-    });
+    }
   };
 }
 
 export function viewCase(caseNumber) {
-  fetch(`/api/cases/${caseNumber}`)
-    .then(response => response.json())
-    .then(caseData => {
-      if (!caseData) return;
+  const caseData = getCase(caseNumber);
+  if (!caseData) return;
 
-      document.getElementById('docketView').style.display = 'none';
-      document.getElementById('caseDetailView').style.display = 'block';
-      document.getElementById('detailCaseNumber').textContent = caseNumber;
-      document.getElementById('caseStatusSelect').value = caseData.status || 'Active';
+  document.getElementById('docketView').style.display = 'none';
+  document.getElementById('caseDetailView').style.display = 'block';
+  document.getElementById('detailCaseNumber').textContent = caseNumber;
+  document.getElementById('caseStatusSelect').value = caseData.status || 'Active';
 
-      loadCaseDetails(caseData);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to load case details. Please try again.');
-    });
+  loadCaseDetails(caseData);
 }
 
 export function updateCaseStatus(caseNumber, newStatus) {
-  fetch(`/api/cases/${caseNumber}/status`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ status: newStatus, judge: currentUser.name })
-  })
-  .then(response => response.json())
-  .then(data => {
+  if (updateStatus(caseNumber, newStatus, currentUser.name)) {
     viewCase(caseNumber); // Refresh the view
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Failed to update case status. Please try again.');
-  });
+  }
 }
 
 export function enterJudgment(caseNumber) {
@@ -506,22 +415,10 @@ export function enterJudgment(caseNumber) {
       judge: currentUser.name
     };
     
-    fetch(`/api/cases/${caseNumber}/judgment`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(judgment)
-    })
-    .then(response => response.json())
-    .then(data => {
+    if (enterJudgmentRecord(caseNumber, judgment)) {
       viewCase(caseNumber);
       document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to enter judgment. Please try again.');
-    });
+    }
   };
 }
 
@@ -555,22 +452,18 @@ export function initiateAppeal(caseNumber) {
       judge: currentUser.name
     };
 
-    fetch(`/api/cases/${caseNumber}/appeal`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(appealInfo)
-    })
-    .then(response => response.json())
-    .then(data => {
-      viewCase(caseNumber);
-      document.querySelector('.modal-overlay').remove();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to initiate appeal. Please try again.');
+    // Create docket entry for appeal
+    createDocketEntry(caseNumber, {
+      date: appealInfo.date,
+      description: `Appeal initiated to ${appealInfo.type === 'GA' ? 'General Appeals Court' : 'Grand Judiciary'}\nGrounds: ${appealInfo.grounds}`,
+      judge: appealInfo.judge
     });
+
+    // Update case status
+    updateStatus(caseNumber, 'On Appeal', currentUser.name);
+
+    document.querySelector('.modal-overlay').remove();
+    viewCase(caseNumber); // Refresh the view
   };
 }
 
