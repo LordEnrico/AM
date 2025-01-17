@@ -491,85 +491,109 @@ function loadCaseDetails(caseData) {
   // Load jury info
   const juryInfo = document.getElementById('juryInfo');
   juryInfo.innerHTML = generateJuryInfo(caseData.jury || {});
+
+  // Load case timeline
+  const caseTimeline = document.getElementById('caseTimeline');
+  caseTimeline.innerHTML = generateCaseTimeline(caseData);
+
+  // Load case tags
+  const caseTags = document.getElementById('caseTags');
+  caseTags.innerHTML = generateCaseTags(caseData.tags || []);
+
+  // Load case notes
+  const caseNotes = document.getElementById('caseNotes');
+  caseNotes.innerHTML = generateCaseNotes(caseData.notes || []);
+
+  // Load case documents
+  const caseDocuments = document.getElementById('caseDocuments');
+  caseDocuments.innerHTML = generateCaseDocuments(caseData.documents || []);
 }
 
-// Helper function to generate fees table
-function generateFeesTable(fees) {
-  if (!fees.length) {
-    return '<p>No fees recorded.</p>';
+// Helper function to generate case timeline
+function generateCaseTimeline(caseData) {
+  const timeline = document.createElement('div');
+  timeline.className = 'timeline';
+
+  const events = [
+    ...caseData.docketEntries.map(entry => ({
+      date: entry.date,
+      description: entry.description,
+      type: 'Docket Entry'
+    })),
+    ...caseData.hearings.map(hearing => ({
+      date: hearing.date,
+      description: hearing.description,
+      type: 'Hearing'
+    })),
+    ...caseData.fees.map(fee => ({
+      date: fee.dateAdded,
+      description: `Fee: ${fee.type} - $${fee.amount}`,
+      type: 'Fee'
+    }))
+  ];
+
+  events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  events.forEach(event => {
+    const eventElement = document.createElement('div');
+    eventElement.className = 'timeline-event';
+    eventElement.innerHTML = `
+      <div class="timeline-date">${event.date}</div>
+      <div class="timeline-description">${event.description}</div>
+      <div class="timeline-type">${event.type}</div>
+    `;
+    timeline.appendChild(eventElement);
+  });
+
+  return timeline.outerHTML;
+}
+
+// Helper function to generate case tags
+function generateCaseTags(tags) {
+  if (!tags.length) {
+    return '<p>No tags assigned.</p>';
   }
 
   return `
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th>Added By</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${fees.map(fee => `
-          <tr>
-            <td>${fee.type}</td>
-            <td>$${fee.amount}</td>
-            <td>${fee.status || 'Pending'}</td>
-            <td>${fee.judge}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
+    <ul class="tags-list">
+      ${tags.map(tag => `<li class="tag">${tag}</li>`).join('')}
+    </ul>
   `;
 }
 
-// Helper function to generate defendant info
-function generateDefendantInfo(defendant) {
-  if (!defendant.name) {
-    return '<p>No defendant information recorded.</p>';
+// Helper function to generate case notes
+function generateCaseNotes(notes) {
+  if (!notes.length) {
+    return '<p>No notes added.</p>';
   }
 
   return `
-    <table>
-      <tr><td>Name:</td><td>${defendant.name}</td></tr>
-      <tr><td>Address:</td><td>${defendant.address}</td></tr>
-      ${defendant.phone ? `<tr><td>Phone:</td><td>${defendant.phone}</td></tr>` : ''}
-      ${defendant.attorney ? `<tr><td>Attorney:</td><td>${defendant.attorney}</td></tr>` : ''}
-      ${defendant.dob ? `<tr><td>DOB:</td><td>${defendant.dob}</td></tr>` : ''}
-    </table>
+    <ul class="notes-list">
+      ${notes.map(note => `
+        <li class="note">
+          <div class="note-date">${note.date}</div>
+          <div class="note-text">${note.text}</div>
+        </li>
+      `).join('')}
+    </ul>
   `;
 }
 
-// Helper function to generate bond info
-function generateBondInfo(bond) {
-  if (!bond.type) {
-    return '<p>No bond information recorded.</p>';
+// Helper function to generate case documents
+function generateCaseDocuments(documents) {
+  if (!documents.length) {
+    return '<p>No documents uploaded.</p>';
   }
 
   return `
-    <table>
-      <tr><td>Type:</td><td>${bond.type}</td></tr>
-      <tr><td>Amount:</td><td>$${bond.amount}</td></tr>
-      <tr><td>Status:</td><td>${bond.status || 'Active'}</td></tr>
-      ${bond.conditions ? `<tr><td>Conditions:</td><td>${bond.conditions.join('<br>')}</td></tr>` : ''}
-    </table>
-  `;
-}
-
-// Helper function to generate jury info
-function generateJuryInfo(jury) {
-  if (!jury.type) {
-    return '<p>No jury information recorded.</p>';
-  }
-
-  return `
-    <table>
-      <tr><td>Type:</td><td>${jury.type}</td></tr>
-      <tr><td>Size:</td><td>${jury.size}</td></tr>
-      <tr><td>Selection Date:</td><td>${jury.selectionDate}</td></tr>
-      <tr><td>Status:</td><td>${jury.status}</td></tr>
-      ${jury.notes ? `<tr><td>Notes:</td><td>${jury.notes}</td></tr>` : ''}
-    </table>
+    <ul class="documents-list">
+      ${documents.map(doc => `
+        <li class="document">
+          <a href="${doc.url}" target="_blank">${doc.name}</a>
+          <div class="document-date">${doc.date}</div>
+        </li>
+      `).join('')}
+    </ul>
   `;
 }
 

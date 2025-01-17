@@ -509,3 +509,99 @@ footer {
   color: #fff;
   margin: 0 10px;
 }
+
+/* Styles for case timeline view */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.timeline-event {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #848484;
+  background: #fff;
+}
+
+.timeline-date {
+  font-weight: bold;
+  color: #1B57AA;
+}
+
+.timeline-description {
+  margin-top: 5px;
+}
+
+.timeline-type {
+  margin-top: 5px;
+  font-style: italic;
+  color: #666;
+}
+
+/* Styles for tagging system */
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 5px 10px;
+  background: #1B57AA;
+  color: #fff;
+  border-radius: 3px;
+}
+
+/* Styles for notes and comments */
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.note {
+  padding: 10px;
+  border: 1px solid #848484;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.note-date {
+  font-weight: bold;
+  color: #1B57AA;
+}
+
+.note-text {
+  margin-top: 5px;
+}
+
+/* Styles for document upload and attachment */
+.documents-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.document {
+  padding: 10px;
+  border: 1px solid #848484;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.document a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+.document a:hover {
+  color: #551A8B;
+}
+
+.document-date {
+  margin-top: 5px;
+  font-style: italic;
+  color: #666;
+}
