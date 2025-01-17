@@ -138,10 +138,6 @@
           <button class="tab-button" onclick="switchTab('defendant')">Defendant Information</button>
           <button class="tab-button" onclick="switchTab('bond')">Bond Information</button>
           <button class="tab-button" onclick="switchTab('jury')">Jury Information</button>
-          <button class="tab-button" onclick="switchTab('timeline')">Case Timeline</button>
-          <button class="tab-button" onclick="switchTab('tags')">Tags</button>
-          <button class="tab-button" onclick="switchTab('notes')">Notes</button>
-          <button class="tab-button" onclick="switchTab('documents')">Documents</button>
         </div>
 
         <div class="case-actions section">
@@ -194,27 +190,6 @@
           <h4>Jury Information</h4>
           <div id="juryInfo"></div>
           <button onclick="editJuryInfo()">Edit Jury Information</button>
-        </div>
-
-        <div id="timeline" class="tab-content">
-          <h4>Case Timeline</h4>
-          <div id="caseTimeline"></div>
-        </div>
-
-        <div id="tags" class="tab-content">
-          <h4>Tags</h4>
-          <div id="caseTags"></div>
-        </div>
-
-        <div id="notes" class="tab-content">
-          <h4>Notes</h4>
-          <div id="caseNotes"></div>
-        </div>
-
-        <div id="documents" class="tab-content">
-          <h4>Documents</h4>
-          <div id="caseDocuments"></div>
-          <button onclick="uploadDocument()">Upload Document</button>
         </div>
 
         <div id="appealSection" class="section" style="display:none">
